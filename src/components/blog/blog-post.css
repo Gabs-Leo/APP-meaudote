@@ -1,0 +1,18 @@
+.post {
+  width: 32%;
+  border-radius: 4px;
+}
+
+.post h3 {
+  color: var(--baseColor);
+  font-weight: bold;
+}
+
+.post-image{
+  border-radius: 4px 4px 0 0;
+  height: 250px;
+  width: 100%;
+  background-image: url("../../images/cat.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+}

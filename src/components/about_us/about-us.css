@@ -1,0 +1,11 @@
+#about-us {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  width: 35%;
+}
+
+#about-us img{ 
+  width: 200px;
+}

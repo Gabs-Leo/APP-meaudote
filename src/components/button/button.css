@@ -1,0 +1,18 @@
+.button {
+  text-decoration: none;
+  text-align: center;
+  color: white;
+  background-color: var(--baseColor);
+  padding: 8px 30px;
+  border-radius: var(--borderRadius);
+  display: inline-block;
+  font-size: 14px;
+  transition: .2s;
+  font-weight: bold;
+}
+
+.button:hover{
+  background-color: var(--variantColor);
+  color: white;
+}
+

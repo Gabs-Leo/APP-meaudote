@@ -1,0 +1,43 @@
+footer {
+  text-align: center;
+  background-color: var(--baseBrown);
+  margin-top: 120px;
+  padding-top: 60px;
+  border-top: 1px solid var(--borderColor);
+  color: white;
+}
+
+footer img {
+  width: 280px;
+}
+
+footer a {
+  text-decoration: none;
+  color: white;
+  transition: .5s;
+}
+
+footer a:hover {
+  color: rgb(198, 198, 198)
+}
+
+footer #logo-with-text{
+  width: 26%;
+}
+
+.footer-menu{
+  width: 26%
+}
+
+footer .container h3{
+  font-size: 17px;
+  color: white;
+  font-weight: bold;
+}
+
+#footer-copyright{
+  text-align: left;
+  background-color: var(--darkBrown);
+  padding: 28px 0px;
+  margin-top: 50px;
+}

@@ -1,0 +1,10 @@
+.post-title {
+  color: var(--baseColor);
+  font-weight: bold;
+  text-align: center;
+}
+.post-title-description{
+  text-align: center;
+  font-size: 16px;
+  margin-bottom: 50px;
+}

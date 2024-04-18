@@ -1,0 +1,34 @@
+#metrics {
+  background-color: var(--baseColor);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url("../../images/dog.png") !important;
+  background-attachment: fixed;
+
+  color: white;
+
+  padding: 100px 0px;
+}
+
+#metrics h2{
+  color: white;
+  font-weight: bold;
+}
+#metrics h3{
+  color: var(--baseColor);
+}
+
+#metrics-numbers {
+  display: flex;
+  justify-content: space-between;
+}
+
+.metric-number {
+  width: 18%;
+}

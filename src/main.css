@@ -1,0 +1,23 @@
+* {
+    box-sizing: border-box;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif ;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+:root{
+    --baseColor: #06BBB6;
+    --variantColor: #028c87;
+    --whiteColor: white;
+
+    --baseColor: #e09e6aff;
+    --variantColor: #BA7A52;
+    --blackColor: rgb(12, 12, 12);
+    --darkBrown: #291C1D;
+    --baseBrown: #362526;
+
+    --borderRadius: 4px
+}
