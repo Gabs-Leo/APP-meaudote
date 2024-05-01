@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import "./button.css"
 
 interface ButtonProps {
@@ -9,7 +10,7 @@ interface ButtonProps {
 export const Button = (props:ButtonProps) => {
   return (
     props.bold ? 
-    <strong><a className="button" href={props.link}>{props.text}</a></strong> :
-    <a className="button" href={props.link}>{props.text}</a>
+    <strong><Link className="button" to={props.link || ""}>{props.text}</Link></strong> :
+    <Link className="button" to={props.link || ""}>{props.text}</Link>
   )
 }

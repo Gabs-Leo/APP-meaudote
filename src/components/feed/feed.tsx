@@ -1,4 +1,5 @@
 import { SearchBar } from "../search_bar/SearchBar"
+import { PetFeed } from "./PetFeed"
 
 const cssObj = {
   width: `100%`,
@@ -10,6 +11,7 @@ export const Feed = () => {
   return <>
     <div className="feed" style={cssObj}>
       <SearchBar />
+      <PetFeed />
     </div>
   </>
 }

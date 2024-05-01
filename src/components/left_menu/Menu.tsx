@@ -4,8 +4,8 @@ import { MenuButton } from "./MenuButton"
 
 export const Menu = () => {
   return <>
-    <div className="w-20">
-      <div className="left-menu">
+    <div style={{width: `300px`}}>
+      <div className="left-menu position-fixed">
         <img src={logo} alt="logo" className="mb-3" />
         <MenuButton path="/donations"     text="DOAÇÕES"      icon="volunteer_activism" />
         <MenuButton path="/notifications" text="NOTIFICAÇÕES" icon="notifications" />

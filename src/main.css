@@ -19,6 +19,7 @@ body {
     --darkBrown: #291C1D;
     --baseBrown: #362526;
     --baseGray: #ebebeb;
+    --darkGray: #bababa;
     --borderRadius: 4px
 }
 
@@ -32,6 +33,10 @@ body {
 
 .black {
     color: var(--blackColor);
+}
+
+.gray {
+    color: var(--darkGray);
 }
 
 .base-color {
