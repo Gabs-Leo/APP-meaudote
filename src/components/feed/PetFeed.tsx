@@ -19,6 +19,10 @@ export const PetFeed = () => {
     updatePets();
   }, [])
   
+  if(animals.length === 0){
+    return <>loading</>
+  }
+
   return <div className="d-flex flex-wrap justify-content-center">
     {animals.map(pet => {
       return (

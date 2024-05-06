@@ -4,6 +4,7 @@ import { CustomModal } from "../modal/Modal"
 import { getWhatsAppLink } from "../../utils/Utils"
 import { AppUser } from "../../types/AppUser"
 import { api } from "../../utils/api"
+import { useAppUser } from "../../providers/AppUserProvider"
 
 interface PetCardProps {
   id:string
@@ -19,11 +20,12 @@ interface PetCardProps {
 export const PetCard = (props:PetCardProps) => {
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
 
-  const [appUser, setAppUser] = useState<AppUser>()
+  const [owner, setOwner] = useState<AppUser>();
+  //TODO const {appUser} = useAppUser();
 
   const getOwner = async () => {
     await api.get(`/pets/${props.id}/owner`).then((response) => { 
-      setAppUser(response.data.data as AppUser);
+      setOwner(response.data.data as AppUser);
     });
   }
 
@@ -31,8 +33,8 @@ export const PetCard = (props:PetCardProps) => {
     getOwner();
   }, [])
 
-  if(appUser == null){
-    return <>loading</>
+  if(owner == null){
+    return <></>
   }
 
   return <>
@@ -55,7 +57,7 @@ export const PetCard = (props:PetCardProps) => {
             <h6>Idade: {props.age}</h6>
             <h6>Peso: {props.weight}kg</h6>
           </div>
-          <Button text="FALAR COM O DONO" textSize={20} link={getWhatsAppLink(appUser.phone, `Quero adotar o ${props.name}!`)}  />
+          <Button text="FALAR COM O DONO" targetBlank textSize={20} link={getWhatsAppLink(owner.phone, `Quero adotar o ${props.name}!`)}  />
         </div>
       </div>
     </CustomModal>
