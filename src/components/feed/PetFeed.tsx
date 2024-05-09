@@ -23,7 +23,7 @@ export const PetFeed = () => {
     return <>loading</>
   }
 
-  return <div className="d-flex flex-wrap justify-content-center">
+  return <div style={{minHeight:`100vh`}} className="d-flex flex-wrap justify-content-center">
     {animals.map(pet => {
       return (
         <PetCard key={pet.id} id={pet.id} description={lorem} weight={pet.weight} name={capitalize(pet.name)} age={pet.age} city={pet.city} state={pet.state} image={`${process.env.REACT_APP_BACKEND_URL}/pets/${pet.id}/image`} />

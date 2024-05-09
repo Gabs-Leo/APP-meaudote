@@ -5,7 +5,7 @@ export const Pets = () => {
   return <>
     <div>
       <div className="container d-flex">
-        <Menu />
+        <Menu filter />
         <Feed />
       </div>
     </div>
