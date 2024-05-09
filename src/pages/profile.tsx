@@ -1,4 +1,3 @@
-import { Feed } from "../components/feed/feed"
 import { Menu } from "../components/left_menu/Menu"
 import image from "./../images/cat.jpg";
 
@@ -22,6 +21,7 @@ export const Profile = () => {
               <h5>Franca - SP</h5>
             </div>
             <div>
+              <h6>0 Pets Registrados</h6>
               <h6>0 Pets Registrados</h6>
             </div>
           </div>
