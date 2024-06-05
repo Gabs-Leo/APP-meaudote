@@ -1,3 +1,5 @@
+import { Species } from "../enums/Species"
+
 export type AdoptionAnimal = {
   id:string
   name:string
@@ -8,4 +10,5 @@ export type AdoptionAnimal = {
   city:string
   state:string
   weight:number
+  species:Species
 }

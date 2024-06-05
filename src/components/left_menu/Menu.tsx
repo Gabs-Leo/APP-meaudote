@@ -6,6 +6,8 @@ import { useEffect, useState } from "react"
 import { State } from "../../types/State"
 import { locationApi } from "../../utils/api"
 import { City } from "../../types/Cities"
+import { getEnumNames } from "../../utils/Utils"
+import { PetFilter } from "../../pages/pets"
 
 interface MenuProps {
   filter?:boolean
@@ -13,8 +15,9 @@ interface MenuProps {
 
 export const Menu = (props:MenuProps) => {
   return <>
-    <div style={{width: `300px`}}>
-      <div className="left-menu position-fixed">
+    <div style={{width: `300px`}}></div>
+    <div style={{width: `300px`}} className="position-fixed">
+      <div className="left-menu " style={{width: `100%`}}>
         <img src={logo} alt="logo" className="mb-3" />
         <MenuButton path="/donations"     text="DOAÇÕES"      icon="volunteer_activism" />
         <MenuButton path="/notifications" text="NOTIFICAÇÕES" icon="notifications" />
@@ -26,10 +29,38 @@ export const Menu = (props:MenuProps) => {
   </>
 }
 
+interface FilterOptions {
+  species:string[]
+  maxAge:number
+  state:string
+  city:string
+}
+
 export const Filter = () => {
   const [states, setStates] = useState<State[]>([]);
   const [cities, setCities] = useState<City[]>([]);
   const [selectedState, setSelectedState] = useState<State>();
+  const [filterOptions, setFilterOptions] = useState<FilterOptions>({
+    species: getEnumNames(Species),
+    city: "Franca",
+    state: "SP",
+    maxAge: 20
+  });
+  console.log(filterOptions.species);
+
+  const updateSpecies = (species:string) => {
+    const index = filterOptions.species.indexOf(species.toUpperCase());
+    const temp = filterOptions.species;
+    if(index === -1){
+      temp.push(species.toUpperCase());
+      setFilterOptions({...filterOptions, species: temp});
+      console.log(filterOptions);
+      return true;
+    }
+    setFilterOptions({...filterOptions, species: temp.filter(i => i !== temp[index])});
+    console.log(filterOptions);
+    return false;
+  }
 
   const updateStates = async () => {
     await locationApi.get("/localidades/estados?orderBy=nome").then((response) => { 
@@ -58,18 +89,19 @@ export const Filter = () => {
     <h3>FILTROS</h3>
     <div className="mb-2">Tipo</div>
     {Object.values(Species).map(val => <div className="form-check">
-      <input className="form-check-input" checked type="checkbox" name="species" id={val} />
+      <input checked={filterOptions.species.includes(val.toUpperCase())} onChange={() => updateSpecies(val)} className="form-check-input"  type="checkbox" name="species" id={val} />
       <label className="form-check-label" htmlFor={val}>{val}</label>
     </div>)}
 
     <hr />
     <label htmlFor="age" className="form-label">Idade Máxima</label>
-    <input type="range" className="form-range" min="2" max="20" step="2" id="age"></input>
+    <input type="range" className="form-range" min="2" max="20" value={filterOptions.maxAge} onChange={(e) => setFilterOptions({...filterOptions, maxAge: Number(e.target.value)})} step="2" id="age"></input>
     
     <hr />
     <div className="form-group">
       <label htmlFor="exampleFormControlSelect1">Estado</label>
       <select className="form-control" id="exampleFormControlSelect1">
+        <option>Todos</option>
         { states.map((obj) => <option key={obj.id}>{obj.nome}</option>) }
       </select>
     </div>
@@ -77,6 +109,7 @@ export const Filter = () => {
     <div className="form-group my-4">
       <label htmlFor="exampleFormControlSelect2">Cidade</label>
       <select className="form-control" id="exampleFormControlSelect2">
+        <option>Todas</option>
         { cities.map(obj => <option key={obj.id}>{obj.nome}</option>) }
       </select>
     </div>

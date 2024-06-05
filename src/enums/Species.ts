@@ -1,4 +1,4 @@
 export enum Species {
-  CAT="Gato", 
-  DOG="Cachorro"
+  CAT="CAT", 
+  DOG="DOG"
 }

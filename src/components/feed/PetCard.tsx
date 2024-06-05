@@ -5,6 +5,7 @@ import { getWhatsAppLink } from "../../utils/Utils"
 import { AppUser } from "../../types/AppUser"
 import { api } from "../../utils/api"
 import { useAppUser } from "../../providers/AppUserProvider"
+import { Species } from "../../enums/Species"
 
 interface PetCardProps {
   id:string
@@ -15,6 +16,7 @@ interface PetCardProps {
   image:string
   description:string
   weight:number
+  species:string
 }
 
 export const PetCard = (props:PetCardProps) => {

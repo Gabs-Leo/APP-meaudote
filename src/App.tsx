@@ -4,6 +4,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Pets } from "./pages/pets";
 import { AppUserProvider } from "./providers/AppUserProvider";
 import { Profile } from "./pages/profile";
+import { Login } from "./pages/login";
+import { Register } from "./pages/register";
 
 export const App = () => {
   return (<>
@@ -15,7 +17,10 @@ export const App = () => {
           <Route path="/donations" element={<Pets />} />
           <Route path="/notifications" element={<Pets />} />
           <Route path="/pets" element={<Pets />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/:username" element={<Profile />} />
         </Routes>
       </BrowserRouter>
       </AppUserProvider>

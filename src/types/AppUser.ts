@@ -5,4 +5,8 @@ export type AppUser = {
   isNGO:boolean
   state:string
   city:string
+  petAmount:number
+  profilePicture:string
+  bannerPicture:string
+  email:string
 }
