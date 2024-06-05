@@ -8,12 +8,25 @@ import { Navbar } from "../components/navbar/Navbar";
 
 export const Home = () => {
     return(<>
-        <Navbar />
-        <Header />
-        <AboutUs />
-        <Metrics />
-        <CardSection />
-        <BlogSection />
-        <Footer />
+      <Navbar />
+      <Header>
+        <h2 
+        data-aos-mirror="true" 
+        data-aos="fade-right" 
+        data-aos-duration="1600">
+        Adote um Pet
+        </h2>
+        <h1 
+        data-aos-mirror="true" 
+        data-aos="fade-left" 
+        data-aos-duration="1600">
+        Salve uma Vida
+        </h1>
+      </Header>
+      <AboutUs />
+      <Metrics />
+      <CardSection />
+      <BlogSection />
+      <Footer />
     </>)
 }

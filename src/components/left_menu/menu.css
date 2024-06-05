@@ -1,0 +1,13 @@
+.left-menu {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  
+  width: 13%;
+  padding: 10px;
+
+}
+
+.left-menu img {
+  width: 50%;
+}

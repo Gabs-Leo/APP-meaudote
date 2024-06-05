@@ -18,6 +18,31 @@ body {
     --blackColor: rgb(12, 12, 12);
     --darkBrown: #291C1D;
     --baseBrown: #362526;
-
+    --baseGray: #ebebeb;
+    --darkGray: #bababa;
     --borderRadius: 4px
+}
+
+.decoration-none{
+    text-decoration: none;
+}
+
+.white {
+    color: white;
+}
+
+.black {
+    color: var(--blackColor);
+}
+
+.gray {
+    color: var(--darkGray);
+}
+
+.base-color {
+    color: var(--baseColor);
+}
+
+.variant-color {
+    color: var(--variantColor);
 }

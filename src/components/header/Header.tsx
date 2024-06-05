@@ -1,21 +1,16 @@
 import "./header.css"
 
-export const Header = () => {
+interface HeaderProps {
+  height?:string
+  image?:string
+  children?:React.ReactNode
+}
+
+export const Header = (props:HeaderProps) => {
   return(<>
-    <header id="header">
+    <header id="header" style={{height: props.height || `80vh`}}>
       <div className="container">
-        <h2 
-          data-aos-mirror="true" 
-          data-aos="fade-right" 
-          data-aos-duration="1600">
-          Adote um Pet
-        </h2>
-        <h1 
-          data-aos-mirror="true" 
-          data-aos="fade-left" 
-          data-aos-duration="1600">
-          Salve uma Vida
-        </h1>
+        {props.children}
       </div>
     </header>
   </>)
