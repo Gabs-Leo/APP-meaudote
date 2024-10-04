@@ -1,5 +1,5 @@
-import { FormEvent, useEffect, useState } from "react";
-import { Menu } from "../components/left_menu/Menu"
+import { FormEvent, useCallback, useEffect, useState } from "react";
+import { Menu } from "../components/left_menu/Menu";
 import { AdoptionAnimal } from "../types/AdoptionAnimal";
 import { api, locationApi } from "../utils/api";
 import { AppUser } from "../types/AppUser";
@@ -14,30 +14,32 @@ import { City } from "../types/Cities";
 
 const getHeaders = async () => {
   return {
-    'Authorization': `Bearer ${localStorage.getItem(`token`)}`,
-    'Content-Tyype': 'application/json'
-  }
-} 
+    Authorization: `Bearer ${localStorage.getItem(`token`)}`,
+    "Content-Tyype": "application/json",
+  };
+};
 
-const defaultPet:AdoptionAnimal = {
+const defaultPet: AdoptionAnimal = {
   adopted: false,
   age: 0,
-  city: 'Franca',
-  state: 'SP',
-  description: '',
-  image: '',
-  name: 'Meu Pet',
+  city: "Franca",
+  state: "SP",
+  description: "",
+  image: "",
+  name: "Meu Pet",
   weight: 0,
-  id: '',
-  species: Species.DOG
-}
+  id: "",
+  species: Species.DOG,
+};
 
 export const Profile = () => {
   const [appUser, setAppUser] = useState<AppUser>();
   const [random, setRandom] = useState<number>(Math.random());
   const { username } = useParams();
+
   const [isPetModalOpen, setPetModalOpen] = useState<boolean>(false);
   const [isProfileModalOpen, setProfileModalOpen] = useState<boolean>(false);
+
   const [isUserLogged, setUserLogged] = useState<boolean>(true);
   const [profilePicture, setProfilePicture] = useState<string>("none");
   const [pet, setPet] = useState<AdoptionAnimal>(defaultPet);
@@ -52,282 +54,337 @@ export const Profile = () => {
     name: ``,
     petAmount: 0,
     phone: ``,
-    profilePicture: ``
+    profilePicture: ``,
   });
   const [states, setStates] = useState<State[]>([]);
   const [cities, setCities] = useState<City[]>([]);
 
   const updateProfilePicture = async () => {
-    await setRandom(Math.random());
-  }
+    setRandom(Math.random());
+  };
 
   const updateAppUser = async () => {
-    if(username == null) {
-      await api.get("/users/current", {headers: await getHeaders()}).then((response) => { 
-        setAppUser(response.data.data as AppUser);
-        setProfilePicture((response.data.data as AppUser).name)
-        setUserLogged(true);
-      }).catch(() => {
-        setUserLogged(false);
-      });
+    // TODO fix useEffect
+    if (username == null) {
+      await api
+        .get("/users/current", { headers: await getHeaders() })
+        .then((response) => {
+          setAppUser(response.data.data as AppUser);
+          setProfilePicture((response.data.data as AppUser).name);
+          setUserLogged(true);
+        })
+        .catch(() => {
+          setUserLogged(false);
+        });
     } else {
-      await api.get(`/users/${username}`, {headers: await getHeaders()}).then((response) => { 
-        setAppUser(response.data.data as AppUser);
-        setProfilePicture((response.data.data as AppUser).name);
-      })
+      await api
+        .get(`/users/${username}`, { headers: await getHeaders() })
+        .then((response) => {
+          setAppUser(response.data.data as AppUser);
+          setProfilePicture((response.data.data as AppUser).name);
+        });
     }
-  }
+  };
 
   const handlePetSaving = async (event: FormEvent) => {
     event.preventDefault();
-    api.post("/pets", pet, {headers: await getHeaders()}).then(response => {
-      setPetModalOpen(false);
-    }).catch(error => {
-      console.log(error.response.data.errors);
-    })
-  }
+    api
+      .post("/pets", pet, { headers: await getHeaders() })
+      .then(() => {
+        setPetModalOpen(false);
+      })
+      .catch((error) => {
+        console.log(error.response.data.errors);
+      });
+  };
 
   const handleProfileUpdate = async (event: FormEvent) => {
     event.preventDefault();
     const user = appUser;
-    if(user){
+    if (user) {
       user.name = tempAppUser.name;
       user.phone = tempAppUser.phone;
-    }else {
+    } else {
       return;
     }
 
-    api.put("/users/current", user, {headers: await getHeaders()}).then(response => {
-      setProfileModalOpen(false);
-    }).catch(error => {
-      console.log(error);
-    })
-  }
+    api
+      .put("/users/current", user, { headers: await getHeaders() })
+      .then(() => {
+        setProfileModalOpen(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const updateStates = async () => {
-    await locationApi.get("/localidades/estados?orderBy=nome").then((response) => { 
-      setStates(response.data as State[]);
-    })
-  }
-
-  const handleStateUpdate = async (state:string) => {
-    if(tempAppUser){
-      setTempAppUser({...tempAppUser, state: state});
-    }
-    await updateCities();
-  }
+    await locationApi
+      .get("/localidades/estados?orderBy=nome")
+      .then((response) => {
+        setStates(response.data as State[]);
+      });
+  };
 
   const updateCities = async () => {
-    if(tempAppUser?.state === "%" && tempAppUser?.city !== "%"){
-      setTempAppUser({...tempAppUser, city: "%"})
+    if (tempAppUser?.state === "%" && tempAppUser?.city !== "%") {
+      setTempAppUser({ ...tempAppUser, city: "%" });
     } else {
-      await locationApi.get(`/localidades/estados/${tempAppUser?.state.replaceAll(" ", "") || "SP"}/distritos?orderBy=nome`).then((response) => { 
-        setCities(response.data as City[]);
-      })
+      await locationApi
+        .get(
+          `/localidades/estados/${tempAppUser?.state.replaceAll(" ", "") || "SP"}/distritos?orderBy=nome`,
+        )
+        .then((response) => {
+          setCities(response.data as City[]);
+        });
     }
-  }
+  };
 
   useEffect(() => {
     updateStates();
     updateCities();
     updateAppUser();
-  }, [isUserLogged, isPetModalOpen])
+  }, [isUserLogged, isPetModalOpen]);
 
-  if(!isUserLogged){
-    return <Navigate to={"/login"} />
+  if (!isUserLogged) {
+    return <Navigate to={"/login"} />;
   }
 
-  if(appUser == null) {
-    return <>loading</>
+  if (appUser == null) {
+    return <>loading</>;
   }
-  
-  return <>
-    <div>
-      <div className="container d-flex">
-        <Menu />
-        <div style={{width: `80%`}}>
-          <div className="w-100" style={{height: `230px`, backgroundColor: `var(--baseColor)`, backgroundImage: `url(${process.env.REACT_APP_BACKEND_URL}/users/${appUser.name}/banner)`, backgroundPosition: `center`, backgroundSize: `cover`}}></div>
-          <div className="mx-5">
-            { username == null ?
-            <div style={{width: `20px`}}>
-              <Dropzone postUrl={`${process.env.REACT_APP_BACKEND_URL}/users/${appUser.name}/image`} then={ () => {updateProfilePicture()} } >
-              <span style={{position: "absolute", backgroundColor: `white`, borderRadius: `100%`}} className="p-2 position material-symbols-outlined">upload</span>
-              </Dropzone>
-            </div> : <></>}
-            
-            <div style={{backgroundImage: `url(${process.env.REACT_APP_BACKEND_URL}/users/${profilePicture}/image?random=${random})`, marginTop: `-75px`, border: `6px solid white`, width: `150px`, backgroundColor: `var(--baseColor)`, height: `150px`, backgroundSize: `cover`, backgroundPosition: `center`, borderRadius: `100%`}}></div>
-          </div>
-          <div className="mx-5">
-            <div>
-              <h3>{capitalize(appUser?.name || " ")}</h3>
-              <h5></h5>
+
+  return (
+    <>
+      <div>
+        <div className="container d-flex">
+          <Menu />
+          <div style={{ width: `80%` }}>
+            <div
+              className="w-100"
+              style={{
+                height: `230px`,
+                backgroundColor: `var(--baseColor)`,
+                backgroundImage: `url(${process.env.REACT_APP_BACKEND_URL}/users/${appUser.name}/banner)`,
+                backgroundPosition: `center`,
+                backgroundSize: `cover`,
+              }}
+            ></div>
+            <div className="mx-5">
+              {username == null ? (
+                <div style={{ width: `20px` }}>
+                  <Dropzone
+                    postUrl={`${process.env.REACT_APP_BACKEND_URL}/users/${appUser.name}/image`}
+                    then={() => {
+                      updateProfilePicture();
+                    }}
+                  >
+                    <span
+                      style={{
+                        position: "absolute",
+                        backgroundColor: `white`,
+                        borderRadius: `100%`,
+                      }}
+                      className="p-2 position material-symbols-outlined"
+                    >
+                      upload
+                    </span>
+                  </Dropzone>
+                </div>
+              ) : (
+                <></>
+              )}
+
+              <div
+                style={{
+                  backgroundImage: `url(${process.env.REACT_APP_BACKEND_URL}/users/${profilePicture}/image?random=${random})`,
+                  marginTop: `-75px`,
+                  border: `6px solid white`,
+                  width: `150px`,
+                  backgroundColor: `var(--baseColor)`,
+                  height: `150px`,
+                  backgroundSize: `cover`,
+                  backgroundPosition: `center`,
+                  borderRadius: `100%`,
+                }}
+              ></div>
             </div>
-            <div>
-              <h6>{appUser?.petAmount} Pet{(appUser?.petAmount || 2) > 1 ? "s" : ""} Registrado{(appUser?.petAmount || 2) > 1 ? "s" : ""}</h6>
-              <div className="d-flex justify-content-between">
-                {username != null ? <></> : <Button text="Adicionar Pet" onClick={() => {setPet(defaultPet) ; setPetModalOpen(true)}} />}
-                {username != null ? <></> : <div><Button text="Editar Perfil" onClick={() => {setTempAppUser(appUser) ; setProfileModalOpen(true)}} /></div>}
+            <div className="mx-5">
+              <div>
+                <h3>{capitalize(appUser?.name || " ")}</h3>
+                <h5></h5>
               </div>
-              <CustomModal open={isPetModalOpen} onClose={() => setPetModalOpen(false)} title="Editar Pet" >
-                
-                <form onSubmit={handlePetSaving}>
-                  <div className="form-group">
-                    <label htmlFor="pet-name">Nome</label>
-                    <input onChange={(e) => setPet({...pet, name: (e.target.value)})} value={pet.name} className="form-control" type="text" name="pet-name" id="pet-name" />
-                  </div>
-                  <div className="d-flex justify-content-between">
-                    <div style={{width: `48%`}} className="form-group">
-                      <label htmlFor="pet-age">Idade</label>
-                      <input onChange={(e) => setPet({...pet, age: Number(e.target.value)})} value={pet.age} className="form-control" type="number" name="pet-age" id="pet-age" max={20} />
+              <div>
+                <h6>
+                  {appUser?.petAmount} Pet
+                  {(appUser?.petAmount || 2) > 1 ? "s" : ""} Registrado
+                  {(appUser?.petAmount || 2) > 1 ? "s" : ""}
+                </h6>
+                <div className="d-flex justify-content-between">
+                  {username != null ? (
+                    <></>
+                  ) : (
+                    <Button
+                      text="Adicionar Pet"
+                      onClick={() => {
+                        setPet(defaultPet);
+                        setPetModalOpen(true);
+                      }}
+                    />
+                  )}
+                  {username != null ? (
+                    <></>
+                  ) : (
+                    <div>
+                      <Button
+                        text="Editar Perfil"
+                        onClick={() => {
+                          setTempAppUser(appUser);
+                          setProfileModalOpen(true);
+                        }}
+                      />
                     </div>
-                    <div style={{width: `48%`}} className="w-50 form-group">
-                      <label htmlFor="pet-species">Espécie</label>
-                      <select value={pet.species} onChange={(e) => setPet({...pet, species: e.target.value as Species})} className="form-control" name="species" id="pet-species">
-                        <option value="CAT">Gato</option>
-                        <option value="DOG">Cachorro</option>
-                      </select>
+                  )}
+                </div>
+                <CustomModal
+                  open={isPetModalOpen}
+                  onClose={() => setPetModalOpen(false)}
+                  title="Editar Pet"
+                >
+                  <form onSubmit={handlePetSaving}>
+                    <div className="form-group">
+                      <label htmlFor="pet-name">Nome</label>
+                      <input
+                        onChange={(e) =>
+                          setPet({ ...pet, name: e.target.value })
+                        }
+                        value={pet.name}
+                        className="form-control"
+                        type="text"
+                        name="pet-name"
+                        id="pet-name"
+                      />
                     </div>
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="pet-description">Descrição</label>
-                    <textarea onChange={(e) => setPet({...pet, description: (e.target.value)})} value={pet.description} className="form-control" id="pet-description" rows={3}></textarea>
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="pet-weight">Peso (Kg)</label>
-                    <input onChange={(e) => setPet({...pet, weight: Number(e.target.value)})} value={pet.weight} className="form-control" type="number" name="pet-weight" id="pet-weight" />
-                  </div>
-                  <div className="d-flex justify-content-end">
-                    <Button className="my-3" submit text="Salvar" />
-                  </div>
-                </form>
-              </CustomModal>
-              <CustomModal open={isProfileModalOpen} onClose={() => {setProfileModalOpen(false)}} title="Editar Perfil" >
-                <form onSubmit={handleProfileUpdate}>
-                  <div className="form-group">
-                    <label htmlFor="pet-name">Nome</label>
-                    <input onChange={(e) => setTempAppUser({...tempAppUser, name: (e.target.value)})} value={tempAppUser.name} className="form-control" type="text" name="pet-name" id="pet-name" />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="pet-name">Phone</label>
-                    <input onChange={(e) => setTempAppUser({...tempAppUser, phone: (e.target.value)})} value={tempAppUser.phone} className="form-control" type="text" name="pet-name" id="pet-name" />
-                  </div>
-                  <div className="d-flex justify-content-end">
-                    <Button className="my-3" submit text="Salvar" />
-                  </div>
-                </form>
-              </CustomModal>
+                    <div className="d-flex justify-content-between">
+                      <div style={{ width: `48%` }} className="form-group">
+                        <label htmlFor="pet-age">Idade</label>
+                        <input
+                          onChange={(e) =>
+                            setPet({ ...pet, age: Number(e.target.value) })
+                          }
+                          value={pet.age}
+                          className="form-control"
+                          type="number"
+                          name="pet-age"
+                          id="pet-age"
+                          max={20}
+                        />
+                      </div>
+                      <div style={{ width: `48%` }} className="w-50 form-group">
+                        <label htmlFor="pet-species">Espécie</label>
+                        <select
+                          value={pet.species}
+                          onChange={(e) =>
+                            setPet({
+                              ...pet,
+                              species: e.target.value as Species,
+                            })
+                          }
+                          className="form-control"
+                          name="species"
+                          id="pet-species"
+                        >
+                          <option value="CAT">Gato</option>
+                          <option value="DOG">Cachorro</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="pet-description">Descrição</label>
+                      <textarea
+                        onChange={(e) =>
+                          setPet({ ...pet, description: e.target.value })
+                        }
+                        value={pet.description}
+                        className="form-control"
+                        id="pet-description"
+                        rows={3}
+                      ></textarea>
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="pet-weight">Peso (Kg)</label>
+                      <input
+                        onChange={(e) =>
+                          setPet({ ...pet, weight: Number(e.target.value) })
+                        }
+                        value={pet.weight}
+                        className="form-control"
+                        type="number"
+                        name="pet-weight"
+                        id="pet-weight"
+                      />
+                    </div>
+                    <div className="d-flex justify-content-end">
+                      <Button className="my-3" submit text="Salvar" />
+                    </div>
+                  </form>
+                </CustomModal>
+                <CustomModal
+                  open={isProfileModalOpen}
+                  onClose={() => {
+                    setProfileModalOpen(false);
+                  }}
+                  title="Editar Perfil"
+                >
+                  <form onSubmit={handleProfileUpdate}>
+                    <div className="form-group">
+                      <label htmlFor="pet-name">Nome</label>
+                      <input
+                        onChange={(e) =>
+                          setTempAppUser({
+                            ...tempAppUser,
+                            name: e.target.value,
+                          })
+                        }
+                        value={tempAppUser.name}
+                        className="form-control"
+                        type="text"
+                        name="pet-name"
+                        id="pet-name"
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="pet-name">Phone</label>
+                      <input
+                        onChange={(e) =>
+                          setTempAppUser({
+                            ...tempAppUser,
+                            phone: e.target.value,
+                          })
+                        }
+                        value={tempAppUser.phone}
+                        className="form-control"
+                        type="text"
+                        name="pet-name"
+                        id="pet-name"
+                      />
+                    </div>
+                    <div className="d-flex justify-content-end">
+                      <Button className="my-3" submit text="Salvar" />
+                    </div>
+                  </form>
+                </CustomModal>
+              </div>
             </div>
-
-          </div>
-          <div className="d-flex">
-          <PetTable username={username} />
+            <div className="d-flex">
+              <PetTable username={username} />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-
-
-  </>
-}
-
-const PetTable = (props:{ username: string | undefined }) => {
-  const [animals, setAnimals] = useState<AdoptionAnimal[]>([]);
-  const [pet, setPet] = useState<AdoptionAnimal>(defaultPet);
-  const [isPetModalOpen, setPetModalOpen] = useState<boolean>(false);
-  const [random, setRandom] = useState<number>(Math.random());
-
-  const updatePets = async () => {
-    await api.get(`/users/${props.username || "current"}/pets`, {headers: await getHeaders()}).then((response) => { 
-      setAnimals(response.data.data.content as AdoptionAnimal[]);
-    })
-  }
-
-  const updateModal = async (petId:string) => {
-    await api.get(`/pets/${petId}`, {headers: await getHeaders()}).then((response) => { 
-      setPet(response.data.data as AdoptionAnimal);
-    })
-    await setPetModalOpen(true);
-  }
-
-  const handlePetSaving = async (event: FormEvent) => {
-    event.preventDefault();
-    api.post("/pets", pet, {headers: await getHeaders()}).then(response => {
-      setPetModalOpen(false);
-    }).catch(error => {
-      console.log(error.response.data.errors);
-    })
-  }
-
-  useEffect(() => {
-    updatePets();
-  }, [props, isPetModalOpen])
-
-  return <>
-    <table className="table table-striped">
-      <thead>
-        <tr>
-          <th scope="col">Nome</th>
-          <th scope="col">Idade</th>
-          <th scope="col">Peso</th>
-          {props.username ? <></> : <th scope="col">Ações</th>}
-        </tr>
-      </thead>
-      <tbody>
-        {animals.map(animal => 
-        <tr key={animal.id}>
-          <th scope="row">{animal.name}</th>
-          <td>{animal.age}</td>
-          <td>{animal.weight}</td>
-          {props.username ? <></> : <td><Button text="Editar" onClick={() => {updateModal(animal.id)}} /></td>}
-        </tr>
-        )}
-      </tbody>
-    </table>
-    <CustomModal open={isPetModalOpen} onClose={() => setPetModalOpen(false)} title="Registrar Pet" >
-      <div className="w-100 d-flex justify-content-between">
-      <div style={{width: `47%`}}>
-        <Dropzone postUrl={`${process.env.REACT_APP_BACKEND_URL}/pets/${pet.id}/image`} then={ () => {setRandom(Math.random())} } >
-          <div className="w-100" style={{ opacity: .6, borderRadius: `10px`, height: `350px`, backgroundImage: `url(${process.env.REACT_APP_BACKEND_URL}/pets/${pet.id}/image?random=${random})`, backgroundPosition: `center`, backgroundSize: `cover`}}>
-          </div>
-          <div style={{position: "relative", marginTop: `-170px`, width: `350px`}} className="d-flex justify-content-center align-items-center">
-            <span style={{position: "absolute", backgroundColor: `white`, borderRadius: `100%`}} className="p-5 position material-symbols-outlined">upload</span>
-          </div>
-        </Dropzone>
-      </div>
-      <form className="w-50" onSubmit={handlePetSaving}>
-        <div className="form-group">
-          <label htmlFor="pet-name">Nome</label>
-          <input onChange={(e) => setPet({...pet, name: (e.target.value)})} value={pet.name} className="form-control" type="text" name="pet-name" id="pet-name" />
-        </div>
-        <div className="d-flex justify-content-between">
-          <div style={{width: `48%`}} className="form-group">
-            <label htmlFor="pet-age">Idade</label>
-            <input onChange={(e) => setPet({...pet, age: Number(e.target.value)})} value={pet.age} className="form-control" type="number" name="pet-age" id="pet-age" max={20} />
-          </div>
-          <div style={{width: `48%`}} className="w-50 form-group">
-            <label htmlFor="pet-species">Espécie</label>
-            <select value={pet.species} onChange={(e) => setPet({...pet, species: e.target.value as Species})} className="form-control" name="species" id="pet-species">
-              <option value="CAT">Gato</option>
-              <option value="DOG">Cachorro</option>
-            </select>
-          </div>
-        </div>
-        <div className="form-group">
-          <label htmlFor="pet-description">Descrição</label>
-          <textarea onChange={(e) => setPet({...pet, description: (e.target.value)})} value={pet.description} className="form-control" id="pet-description" rows={3}></textarea>
-        </div>
-        <div className="form-group">
-          <label htmlFor="pet-weight">Peso (Kg)</label>
-          <input onChange={(e) => setPet({...pet, weight: Number(e.target.value)})} value={pet.weight} className="form-control" type="number" name="pet-weight" id="pet-weight" />
-        </div>
-        <div className="d-flex justify-content-end">
-          <Button className="my-3" submit text="Salvar" />
-        </div>
-      </form>
-      </div>
-    </CustomModal>
-  </>
-}
+    </>
+  );
+};
 
 /*
                   <div className="form-group">
