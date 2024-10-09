@@ -2,14 +2,13 @@ import {
   PropsWithChildren,
   createContext,
   useContext,
-  useEffect,
   useState,
 } from "react";
 import { AppUser } from "../types/AppUser";
 import { api } from "../utils/api";
 
 interface AppUserContextValue {
-  appUser: AppUser;
+  appUser: AppUser | undefined;
 }
 
 const AppUserContext = createContext<AppUserContextValue | undefined>(
@@ -34,13 +33,7 @@ export const AppUserProvider = (props: PropsWithChildren) => {
     });
   };
 
-  useEffect(() => {
-    getLoggedUser();
-  }, []);
-
-  if (loggedAppUser == null) {
-    return <>loading</>;
-  }
+  getLoggedUser();
 
   return (
     <AppUserContext.Provider value={{ appUser: loggedAppUser }}>

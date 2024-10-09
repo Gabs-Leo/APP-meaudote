@@ -1,4 +1,4 @@
-import { FormEvent, useCallback, useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { Menu } from "../components/left_menu/Menu";
 import { AdoptionAnimal } from "../types/AdoptionAnimal";
 import { api, locationApi } from "../utils/api";
@@ -9,8 +9,7 @@ import { Button } from "../components/button/Button";
 import { CustomModal } from "../components/modal/Modal";
 import { Dropzone } from "../components/dropzone/Dropzone";
 import { Species } from "../enums/Species";
-import { State } from "../types/State";
-import { City } from "../types/Cities";
+import { PetTable } from "../components/pet_table/PetTable";
 
 const getHeaders = async () => {
   return {
@@ -56,8 +55,8 @@ export const Profile = () => {
     phone: ``,
     profilePicture: ``,
   });
-  const [states, setStates] = useState<State[]>([]);
-  const [cities, setCities] = useState<City[]>([]);
+  //const [states, setStates] = useState<State[]>([]);
+  //const [cities, setCities] = useState<City[]>([]);
 
   const updateProfilePicture = async () => {
     setRandom(Math.random());
@@ -119,11 +118,9 @@ export const Profile = () => {
   };
 
   const updateStates = async () => {
-    await locationApi
-      .get("/localidades/estados?orderBy=nome")
-      .then((response) => {
-        setStates(response.data as State[]);
-      });
+    await locationApi.get("/localidades/estados?orderBy=nome").then(() => {
+      //setStates(response.data as State[]);
+    });
   };
 
   const updateCities = async () => {
@@ -134,8 +131,8 @@ export const Profile = () => {
         .get(
           `/localidades/estados/${tempAppUser?.state.replaceAll(" ", "") || "SP"}/distritos?orderBy=nome`,
         )
-        .then((response) => {
-          setCities(response.data as City[]);
+        .then(() => {
+          //setCities(response.data as City[]);
         });
     }
   };
@@ -149,7 +146,7 @@ export const Profile = () => {
   if (!isUserLogged) {
     return <Navigate to={"/login"} />;
   }
-
+  
   if (appUser == null) {
     return <>loading</>;
   }

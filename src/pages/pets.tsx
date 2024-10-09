@@ -19,18 +19,10 @@ export interface PetFilter {
   city: string;
 }
 
-const starterFilter: PetFilter = {
-  species: [Species.CAT, Species.DOG],
-  maxAge: 20,
-  state: "Todos",
-  city: "Todas",
-};
-
 export const Pets = () => {
   const [states, setStates] = useState<State[]>([]);
   const [cities, setCities] = useState<City[]>([]);
   const [animals, setAnimals] = useState<AdoptionAnimal[]>([]);
-  const [selectedState, setSelectedState] = useState<State>();
   const [filterOptions, setFilterOptions] = useState<FilterOptions>({
     species: getEnumNames(Species),
     city: "%",
@@ -47,7 +39,7 @@ export const Pets = () => {
       .then((response) => {
         result = response.data.data.content as AdoptionAnimal[];
       });
-    await setAnimals(result);
+    setAnimals(result);
   };
 
   const updateSpecies = (species: string) => {
