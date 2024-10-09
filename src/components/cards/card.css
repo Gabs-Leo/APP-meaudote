@@ -1,33 +1,36 @@
 .card {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  width: 32%;
+    width: 32%;
+    padding: 10px;
 }
 
 .card h3 {
-  color: var(--baseColor);
-  font-weight: bold;
+    color: var(--baseColor);
+    font-weight: bold;
 }
 
-.card-image{
-  width: 40%;
-  height: 100%;
-  background-image: url("../../images/cat.jpg");
-  background-position: center;
-  background-repeat: no-repeat;
+.card-image {
+    width: 100%;
+    height: 200px;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    border-radius: 4px;
 }
-.card-text{
-  width: 60%;
+
+.card-text {
+    width: 100%;
 }
+
 #card-section h2 {
-  color: var(--baseColor);
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 60px;
+    color: var(--baseColor);
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 60px;
 }
+
 #card-section .card-container {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
