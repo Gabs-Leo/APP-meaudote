@@ -21,6 +21,7 @@ export const Login = () => {
 const LoginForm = () => {
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
+  const [loginError, setLoginError] = useState<string>("");
   const navigate = useNavigate();
 
   const handleLogin = async (event: FormEvent) => {
@@ -32,7 +33,12 @@ const LoginForm = () => {
         navigate("/pets");
       })
       .catch((error) => {
-        console.log(error.response.data.errors);
+        console.log(error.response.data.errors)
+        if(error.response.data.errors[0] == "Bad credentials"){
+          setLoginError("Credenciais inválidas.");
+        } else {
+          setLoginError(error.response.data.errors[0]);
+        }
       });
   };
 
@@ -70,6 +76,9 @@ const LoginForm = () => {
                 aria-describedby="passwordHelp"
                 placeholder="Senha"
               />
+            </div>
+            <div style={{color: `red`}}>
+              {loginError}
             </div>
             <div className="d-flex justify-content-between align-items-center">
               <div className="black">Esqueceu a Senha?</div>
