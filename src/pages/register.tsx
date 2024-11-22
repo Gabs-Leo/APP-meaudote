@@ -10,7 +10,9 @@ export const Register = () => {
   return (
     <div>
       <Navbar />
-      <Header height="400px" />
+      <Header height="400px">
+        <h1 className="white">Criar Conta</h1>
+      </Header>
       <RegisterForm />
       <Footer />
     </div>
@@ -38,6 +40,7 @@ const defaultForm: RegisterForm = {
 };
 
 const RegisterForm = () => {
+  const [errorMessage, setErrorMessage] = useState("");
   const [userForm, setUserForm] = useState<RegisterForm>(defaultForm);
   const navigate = useNavigate();
 
@@ -50,7 +53,9 @@ const RegisterForm = () => {
         navigate("/pets");
       })
       .catch((error) => {
-        console.log(error.response.data.errors);
+        const errorMsg:string = error.response.data.errors[0];
+        setErrorMessage(errorMsg.replaceAll("already in use.", "já está em uso."));
+        console.log(errorMsg);
       });
   };
 
@@ -168,7 +173,7 @@ const RegisterForm = () => {
               />
             </div>
             <div className="d-flex justify-content-between align-items-center">
-              <div className="black">Esqueceu a Senha?</div>
+              <div style={{color: `red`}} className="black">{errorMessage}</div>
               <Button text="ENTRAR" submit />
             </div>
           </form>

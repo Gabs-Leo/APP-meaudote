@@ -7,10 +7,6 @@ export const Footer = () => {
       <div className="container d-flex justify-content-between">
         <div id="logo-with-text">
           <img src={logo} alt="LOGO.jpeg" />
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis vero
-            saepe ullam repellat aspernatur laudantium quis.
-          </p>
         </div>
       </div>
       <div id="footer-copyright">

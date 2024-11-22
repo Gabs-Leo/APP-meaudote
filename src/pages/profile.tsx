@@ -233,13 +233,7 @@ export const Profile = () => {
                     <></>
                   ) : (
                     <div>
-                      <Button
-                        text="Editar Perfil"
-                        onClick={() => {
-                          setTempAppUser(appUser);
-                          setProfileModalOpen(true);
-                        }}
-                      />
+                      
                     </div>
                   )}
                 </div>

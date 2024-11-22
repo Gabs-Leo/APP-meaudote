@@ -11,7 +11,9 @@ export const Login = () => {
   return (
     <div>
       <Navbar />
-      <Header height="400px" />
+      <Header height="400px">
+        <h1 className="white">Login</h1>
+      </Header>
       <LoginForm />
       <Footer />
     </div>
@@ -21,18 +23,24 @@ export const Login = () => {
 const LoginForm = () => {
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
+  const [loginError, setLoginError] = useState<string>("");
   const navigate = useNavigate();
 
   const handleLogin = async (event: FormEvent) => {
     event.preventDefault();
     api
-      .post("/auth/login", { email: email, password: password })
+      .post("/auth/login", { email: email, password: password }, { headers: {"Access-Control-Allow-Origin": "*"} })
       .then((response) => {
         localStorage.setItem("token", response.data.data as string);
         navigate("/pets");
       })
       .catch((error) => {
-        console.log(error.response.data.errors);
+        console.log(error)
+        if(error.response.data.errors[0] == "Bad credentials"){
+          setLoginError("Credenciais inválidas.");
+        } else {
+          setLoginError(error.response.data.errors[0]);
+        }
       });
   };
 
@@ -71,8 +79,11 @@ const LoginForm = () => {
                 placeholder="Senha"
               />
             </div>
+            <div style={{color: `red`}}>
+              {loginError}
+            </div>
             <div className="d-flex justify-content-between align-items-center">
-              <div className="black">Esqueceu a Senha?</div>
+              <div className="black"></div>
               <Button text="ENTRAR" submit />
             </div>
           </form>
