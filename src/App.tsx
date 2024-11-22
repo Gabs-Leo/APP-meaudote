@@ -17,6 +17,7 @@ export const App = () => {
           <Route path="/donations" element={<Pets />} />
           <Route path="/notifications" element={<Pets />} />
           <Route path="/pets" element={<Pets />} />
+          
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<Profile />} />
