@@ -3,7 +3,6 @@ import { Button } from "../components/button/Button";
 import { Footer } from "../components/footer/Footer";
 import { Header } from "../components/header/Header";
 import { Navbar } from "../components/navbar/Navbar";
-import { lorem } from "../utils/Utils";
 import { api } from "../utils/api";
 import { useNavigate } from "react-router-dom";
 

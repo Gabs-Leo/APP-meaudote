@@ -3,7 +3,6 @@ import { City } from "../types/Cities";
 import { Species } from "../enums/Species";
 import { PetCard } from "../components/feed/PetCard";
 import { AdoptionAnimal } from "../types/AdoptionAnimal";
-import { SearchBar } from "../components/search_bar/SearchBar";
 import { MenuButton } from "../components/left_menu/MenuButton";
 
 import { useEffect, useState } from "react";
