@@ -62,3 +62,47 @@ nav a {
 #adopt-nav-button:hover{
     background-color: var(--variantColor);
 }
+
+.mobile-menu{
+    display: none;
+}
+
+@media screen and (max-width: 1000px) {
+    .pc-menu{
+        display: none;
+    }
+    nav{
+        position: fixed;
+        justify-content: space-between;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+    nav .container{
+        width: 100%
+    }
+    .mobile-menu{
+        display: block;
+    }
+    .menu-screen{
+        width: 100%;
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 100vh;
+        overflow-x: hidden;
+        background-color: rgba(0, 0, 0, .8);
+    
+        transition: .4s;
+        flex-direction: column;
+        display: flex;
+        position: fixed;
+        align-items: center;
+        justify-content: center;
+    }
+    .menu-screen a {
+        font-size: 30px;
+        color: white;
+    }
+}

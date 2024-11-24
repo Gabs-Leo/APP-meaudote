@@ -41,3 +41,16 @@ footer .container h3{
   padding: 28px 0px;
   margin-top: 50px;
 }
+
+@media screen and (max-width: 1000px) {
+  #footer-copyright{
+    text-align: center;
+    width: 100%;
+  }
+  footer div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
