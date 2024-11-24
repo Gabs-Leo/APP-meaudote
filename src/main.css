@@ -46,3 +46,7 @@ body {
 .variant-color {
     color: var(--variantColor);
 }
+
+.pointer-on-hover:hover {
+    cursor: pointer;
+}

@@ -97,7 +97,11 @@ const LoginForm = () => {
           <h2 className="mb-3" style={{ fontSize: `20px` }}>
             CRIAR CONTA
           </h2>
-          <p>{lorem}</p>
+          <p>
+            "Ainda não tem uma conta?
+            Cadastre-se agora e comece a fazer a diferença!
+            Juntos, podemos transformar a vida de centenas de animais. Crie sua conta agora mesmo e faça parte dessa missão!"
+          </p>
           <div className="d-flex justify-content-end">
             <Button text="REGISTRAR" link="/register" />
           </div>

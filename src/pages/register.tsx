@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react";
 import { Button } from "../components/button/Button";
 import { api } from "../utils/api";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Footer } from "../components/footer/Footer";
 import { Header } from "../components/header/Header";
 import { Navbar } from "../components/navbar/Navbar";
@@ -55,6 +55,7 @@ const RegisterForm = () => {
       .catch((error) => {
         const errorMsg:string = error.response.data.errors[0];
         setErrorMessage(errorMsg.replaceAll("already in use.", "já está em uso."));
+        setErrorMessage(errorMsg.replaceAll("Invalid CPF", "CPF inválido"));
         console.log(errorMsg);
       });
   };
@@ -172,8 +173,11 @@ const RegisterForm = () => {
                 placeholder="Senha"
               />
             </div>
+            <div style={{color: `red`}} className="black">{errorMessage}</div>
             <div className="d-flex justify-content-between align-items-center">
-              <div style={{color: `red`}} className="black">{errorMessage}</div>
+              <div>
+                <p>Já tem uma conta? Faça <Link to={"/login"}>login</Link>.</p>
+              </div>
               <Button text="ENTRAR" submit />
             </div>
           </form>

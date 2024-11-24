@@ -16,22 +16,13 @@ export const Navbar = () => {
           <Button link="/pets" text="ADOTAR" />
         </div>
         <div>
-          <a className="menu-option" href="#projects">
-            DOAR
-          </a>
+          <Link className="menu-option" to={"/contact"}>CONTATO</Link>
         </div>
         <div>
-          <a className="menu-option" href="#contact">
-            CONTATO
-          </a>
+          <Link className="menu-option" to={"/about"}>SOBRE</Link>
         </div>
         <div>
-          <a className="menu-option" href="#about">
-            SOBRE
-          </a>
-        </div>
-        <div>
-          <Link style={{ color: `var(--baseColor)` }} to={"/login"}>
+          <Link style={{ color: `var(--baseColor)`, fontWeight: `bold` }} to={"/login"}>
             LOGIN
           </Link>
         </div>
