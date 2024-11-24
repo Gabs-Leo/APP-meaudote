@@ -3,7 +3,6 @@ import { City } from "../types/Cities";
 import { Species } from "../enums/Species";
 import { PetCard } from "../components/feed/PetCard";
 import { AdoptionAnimal } from "../types/AdoptionAnimal";
-import { SearchBar } from "../components/search_bar/SearchBar";
 import { MenuButton } from "../components/left_menu/MenuButton";
 
 import { useEffect, useState } from "react";
@@ -11,6 +10,7 @@ import { api, locationApi } from "../utils/api";
 import defaultCatImage from "./../images/default-cat.png";
 import defaultDogImage from "./../images/default-dog.png";
 import { capitalize, getEnumNames, logo, lorem } from "../utils/Utils";
+import { Navigate } from "react-router-dom";
 
 export interface PetFilter {
   species: Species[];
@@ -95,6 +95,10 @@ export const Pets = () => {
     return <>loading</>;
   }
 
+  if (!localStorage.getItem("token")){
+    return <Navigate to={"/login"} />
+  }
+
   return (
     <>
       <div>
@@ -104,16 +108,6 @@ export const Pets = () => {
             <div style={{ width: `300px` }} className="position-fixed">
               <div className="left-menu " style={{ width: `100%` }}>
                 <img src={logo} alt="logo" className="mb-3" />
-                <MenuButton
-                  path="/donations"
-                  text="DOAÇÕES"
-                  icon="volunteer_activism"
-                />
-                <MenuButton
-                  path="/notifications"
-                  text="NOTIFICAÇÕES"
-                  icon="notifications"
-                />
                 <MenuButton path="/pets" text="PETS" icon="pet_supplies" />
                 <MenuButton path="/profile" text="PERFIL" icon="person" />
                 <div className="w-100 p-3">
@@ -133,7 +127,7 @@ export const Pets = () => {
                         id={val}
                       />
                       <label className="form-check-label" htmlFor={val}>
-                        {val}
+                        {val == "CAT" ? "Gatos" : "Cachorros"}
                       </label>
                     </div>
                   ))}
@@ -209,7 +203,6 @@ export const Pets = () => {
               borderTop: `0px solid black`,
             }}
           >
-            <SearchBar />
             <div
               style={{ minHeight: `100vh` }}
               className="d-flex flex-wrap justify-content-center"

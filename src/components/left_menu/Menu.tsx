@@ -7,30 +7,27 @@ import { State } from "../../types/State";
 import { locationApi } from "../../utils/api";
 import { City } from "../../types/Cities";
 import { getEnumNames } from "../../utils/Utils";
+import { useNavigate } from "react-router-dom";
 
 interface MenuProps {
   filter?: boolean;
 }
 
-export const Menu = (props: MenuProps) => {
+export const LeftMenu = (props: MenuProps) => {
+  const navigate = useNavigate();
+  
   return (
     <>
       <div style={{ width: `300px` }}></div>
       <div style={{ width: `300px` }} className="position-fixed">
         <div className="left-menu " style={{ width: `100%` }}>
           <img src={logo} alt="logo" className="mb-3" />
-          <MenuButton
-            path="/donations"
-            text="DOAÇÕES"
-            icon="volunteer_activism"
-          />
-          <MenuButton
-            path="/notifications"
-            text="NOTIFICAÇÕES"
-            icon="notifications"
-          />
           <MenuButton path="/pets" text="PETS" icon="pet_supplies" />
           <MenuButton path="/profile" text="PERFIL" icon="person" />
+          <MenuButton path="/profile" text="SAIR" icon="logout" type="function" onClick={() => {
+            localStorage.removeItem("token");
+            navigate("/")
+          }} />
           {props.filter ? <Filter /> : <></>}
         </div>
       </div>

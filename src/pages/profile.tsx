@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
-import { Menu } from "../components/left_menu/Menu";
+import { LeftMenu } from "../components/left_menu/Menu";
 import { AdoptionAnimal } from "../types/AdoptionAnimal";
 import { api, locationApi } from "../utils/api";
 import { AppUser } from "../types/AppUser";
@@ -55,15 +55,12 @@ export const Profile = () => {
     phone: ``,
     profilePicture: ``,
   });
-  //const [states, setStates] = useState<State[]>([]);
-  //const [cities, setCities] = useState<City[]>([]);
 
   const updateProfilePicture = async () => {
     setRandom(Math.random());
   };
 
   const updateAppUser = async () => {
-    // TODO fix useEffect
     if (username == null) {
       await api
         .get("/users/current", { headers: await getHeaders() })
@@ -155,7 +152,7 @@ export const Profile = () => {
     <>
       <div>
         <div className="container d-flex">
-          <Menu />
+          <LeftMenu />
           <div style={{ width: `80%` }}>
             <div
               className="w-100"
