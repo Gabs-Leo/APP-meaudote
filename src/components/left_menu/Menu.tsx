@@ -7,8 +7,7 @@ import { State } from "../../types/State";
 import { locationApi } from "../../utils/api";
 import { City } from "../../types/Cities";
 import { getEnumNames } from "../../utils/Utils";
-import { AppUser } from "../../types/AppUser";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface MenuProps {
   filter?: boolean;
