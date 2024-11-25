@@ -151,9 +151,9 @@ export const Profile = () => {
 
   return (
     <>
-      <div >
-        <div className="container d-flex">
-          <LeftMenu />
+      <div id="profile-container">
+        <div id="profile-container" className="container d-flex">
+          <LeftMenu closeOnClick />
           <div id="profile-container" style={{ width: `80%` }}>
             <div
               className="w-100"

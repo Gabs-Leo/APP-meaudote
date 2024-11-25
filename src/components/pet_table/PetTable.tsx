@@ -32,6 +32,7 @@ export const PetTable = (props: { username: string | undefined }) => {
   const [isPetModalOpen, setPetModalOpen] = useState<boolean>(false);
   const [random, setRandom] = useState<number>(Math.random());
 
+  
   const closeModal = () => {
     setPetModalOpen(false);
     updatePets();
@@ -63,8 +64,13 @@ export const PetTable = (props: { username: string | undefined }) => {
       })
       .then((response) => {
         setAnimals(response.data.data.content as AdoptionAnimal[]);
+        console.log("result", response.data.data.content)
+      }).catch((err) => {
+        console.log("error", err)
       });
   }, [props.username]);
+
+  updatePets();
 
   return (
     <>

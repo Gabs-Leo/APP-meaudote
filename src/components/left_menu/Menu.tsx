@@ -9,9 +9,19 @@ import { useNavigate } from "react-router-dom";
 import logo from "./../../images/logo_color.png";
 import { getEnumNames } from "../../utils/Utils";
 import Hamburger from "hamburger-react";
+import { Button } from "../button/Button";
+
+interface CloseButton {
+  text:string
+  position:"bottom"
+}
 
 interface MenuProps {
   filter?: boolean;
+  children?: React.ReactNode;
+  hamburgerColor?:string;
+  closeOnClick?:boolean;
+  closeButton?:CloseButton
 }
 
 export const LeftMenu = (props: MenuProps) => {
@@ -30,10 +40,10 @@ export const LeftMenu = (props: MenuProps) => {
   return (
     <>
       <div id="mobile-menu">
-        <Hamburger color="white" toggled={isOpen} toggle={handleOpen} />
+        <Hamburger color={props.hamburgerColor || "white"} toggled={isOpen} toggle={handleOpen} />
       </div>
       <div id="filler-div" style={{ width: `300px` }}></div>
-      <div id="left-menu" style={{ width: menuWidth }} onClick={handleOpen} className="position-fixed">
+      <div id="left-menu" style={{ width: '300px' }} className="position-fixed">
         <div className="left-menu" style={{ width: `100%` }}>
           <img src={logo} alt="logo" className="mb-3" />
           <MenuButton path="/pets" text="PETS" icon="pet_supplies" />
@@ -42,7 +52,30 @@ export const LeftMenu = (props: MenuProps) => {
             localStorage.removeItem("token");
             navigate("/")
           }} />
-          {props.filter ? <Filter /> : <></>}
+          {props.children}
+        </div>
+      </div>
+      <div id="mobile-left-menu" style={{ width: menuWidth }} onClick={ () => {
+        if(props.closeOnClick)
+          handleOpen();
+      }}>
+        <div className="d-flex align-items-center flex-column p-4">
+          <img src={logo} className="mb-3" />
+          <MenuButton path="/pets" text="PETS" icon="pet_supplies" />
+          <MenuButton path="/profile" text="PERFIL" icon="person" />
+          <MenuButton path="/profile" text="SAIR" icon="logout" type="function" onClick={() => {
+            localStorage.removeItem("token");
+            navigate("/")
+          }} />
+          {props.children}
+          {props.closeButton && props.closeButton.position === "bottom" ? 
+            <div id="left-menu-close-button">
+              <Button text={props.closeButton.text} onClick={handleOpen} />
+              <p style={{opacity: 0}}>xd</p>
+            </div>
+            :
+            <div></div>
+          }
         </div>
       </div>
     </>

@@ -1,16 +1,17 @@
+import "./pets.css"
 import { State } from "../types/State";
 import { City } from "../types/Cities";
 import { Species } from "../enums/Species";
 import { PetCard } from "../components/feed/PetCard";
 import { AdoptionAnimal } from "../types/AdoptionAnimal";
-import { MenuButton } from "../components/left_menu/MenuButton";
 
 import { useEffect, useState } from "react";
 import { api, locationApi } from "../utils/api";
 import defaultCatImage from "./../images/default-cat.png";
 import defaultDogImage from "./../images/default-dog.png";
-import { capitalize, getEnumNames, logo, lorem } from "../utils/Utils";
+import { capitalize, getEnumNames, lorem } from "../utils/Utils";
 import { Navigate } from "react-router-dom";
+import { LeftMenu } from "../components/left_menu/Menu";
 
 export interface PetFilter {
   species: Species[];
@@ -101,102 +102,94 @@ export const Pets = () => {
 
   return (
     <>
-      <div>
-        <div className="container d-flex">
-          <div>
-            <div style={{ width: `300px` }}></div>
-            <div style={{ width: `300px` }} className="position-fixed">
-              <div className="left-menu " style={{ width: `100%` }}>
-                <img src={logo} alt="logo" className="mb-3" />
-                <MenuButton path="/pets" text="PETS" icon="pet_supplies" />
-                <MenuButton path="/profile" text="PERFIL" icon="person" />
-                <div className="w-100 p-3">
-                  <hr />
-                  <h3>FILTROS</h3>
-                  <div className="mb-2">Tipo</div>
-                  {Object.values(Species).map((val) => (
-                    <div className="form-check">
-                      <input
-                        checked={filterOptions.species.includes(
-                          val.toUpperCase(),
-                        )}
-                        onChange={() => updateSpecies(val)}
-                        className="form-check-input"
-                        type="checkbox"
-                        name="species"
-                        id={val}
-                      />
-                      <label className="form-check-label" htmlFor={val}>
-                        {val == "CAT" ? "Gatos" : "Cachorros"}
-                      </label>
-                    </div>
-                  ))}
-
-                  <hr />
-                  <label htmlFor="age" className="form-label">
-                    Idade Máxima - {filterOptions.maxAge}
-                  </label>
+      <div className="pet-conatainer">
+        <div className="container d-flex pet-conatainer">
+          <LeftMenu hamburgerColor="var(--baseColor)" closeButton={{text:"APLICAR", position: "bottom"}}>
+            <div id="left-menu-filter" className="w-100 p-3">
+              <hr />
+              <h3>FILTROS</h3>
+              <div className="mb-2">Tipo</div>
+              {Object.values(Species).map((val) => (
+                <div className="form-check">
                   <input
-                    type="range"
-                    className="form-range"
-                    min="2"
-                    max="20"
-                    value={filterOptions.maxAge}
-                    onChange={(e) =>
-                      setFilterOptions({
-                        ...filterOptions,
-                        maxAge: Number(e.target.value),
-                      })
-                    }
-                    step="2"
-                    id="age"
-                  ></input>
-
-                  <hr />
-                  <div className="form-group">
-                    <label htmlFor="exampleFormControlSelect1">Estado</label>
-                    <select
-                      value={filterOptions.state}
-                      onChange={(e) => handleStateUpdate(e.target.value)}
-                      className="form-control"
-                      id="exampleFormControlSelect1"
-                    >
-                      <option value={"%"}>Todos</option>
-                      {states.map((obj) => (
-                        <option value={obj.sigla} key={obj.id}>
-                          {obj.nome}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div className="form-group my-4">
-                    <label htmlFor="exampleFormControlSelect2">Cidade</label>
-                    <select
-                      value={filterOptions.city}
-                      onChange={(e) =>
-                        setFilterOptions({
-                          ...filterOptions,
-                          city: e.target.value,
-                        })
-                      }
-                      className="form-control"
-                      id="exampleFormControlSelect2"
-                    >
-                      <option value={"%"}>Todas</option>
-                      {cities.map((obj) => (
-                        <option key={obj.id} value={obj.nome}>
-                          {obj.nome}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                    checked={filterOptions.species.includes(
+                      val.toUpperCase(),
+                    )}
+                    onChange={() => updateSpecies(val)}
+                    className="form-check-input"
+                    type="checkbox"
+                    name="species"
+                    id={val}
+                  />
+                  <label className="form-check-label" htmlFor={val}>
+                    {val == "CAT" ? "Gatos" : "Cachorros"}
+                  </label>
                 </div>
+              ))}
+
+              <hr />
+              <label htmlFor="age" className="form-label">
+                Idade Máxima - {filterOptions.maxAge}
+              </label>
+              <input
+                type="range"
+                className="form-range"
+                min="2"
+                max="20"
+                value={filterOptions.maxAge}
+                onChange={(e) =>
+                  setFilterOptions({
+                    ...filterOptions,
+                    maxAge: Number(e.target.value),
+                  })
+                }
+                step="2"
+                id="age"
+              ></input>
+
+              <hr />
+              <div className="form-group">
+                <label htmlFor="exampleFormControlSelect1">Estado</label>
+                <select
+                  value={filterOptions.state}
+                  onChange={(e) => handleStateUpdate(e.target.value)}
+                  className="form-control"
+                  id="exampleFormControlSelect1"
+                >
+                  <option value={"%"}>Todos</option>
+                  {states.map((obj) => (
+                    <option value={obj.sigla} key={obj.id}>
+                      {obj.nome}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="form-group my-4">
+                <label htmlFor="exampleFormControlSelect2">Cidade</label>
+                <select
+                  value={filterOptions.city}
+                  onChange={(e) =>
+                    setFilterOptions({
+                      ...filterOptions,
+                      city: e.target.value,
+                    })
+                  }
+                  className="form-control"
+                  id="exampleFormControlSelect2"
+                >
+                  <option value={"%"}>Todas</option>
+                  {cities.map((obj) => (
+                    <option key={obj.id} value={obj.nome}>
+                      {obj.nome}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
-          </div>
+          </LeftMenu>
           <div
-            className="feed"
+            className="feed pet-conatainer"
             style={{
               width: `80%`,
               border: `2px solid var(--baseGray)`,
@@ -213,7 +206,7 @@ export const Pets = () => {
                     key={pet.id}
                     species={pet.species}
                     id={pet.id}
-                    description={lorem}
+                    description={pet.description}
                     weight={pet.weight}
                     name={capitalize(pet.name)}
                     age={pet.age}

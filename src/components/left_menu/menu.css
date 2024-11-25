@@ -3,22 +3,27 @@
   align-items: center;
   flex-direction: column;
   
-  
   width: 13%;
   padding: 10px;
-
 }
 
 .left-menu img {
   width: 50%;
 }
 
+#mobile-left-menu, #mobile-menu{
+  display: none;
+}
+
 @media screen and (max-width: 1000px) {
   #filler-div{
     display: none;
   }
-  #left-menu{
-    height: 100vh !important;
+
+  #mobile-left-menu{
+    position: fixed;
+    height: 100vh;
+    display: flex;
     top: 0;
     left: 0;
     z-index: 99;
@@ -26,11 +31,16 @@
     transition: .4s;
     overflow-x: hidden;
   }
+  #mobile-left-menu img{
+    width: 50%;
+  }
+  #left-menu{
+    display: none;
+  }
   #mobile-menu{
     display: block;
     position: fixed;
     right: 0;
     top: 0;
   }
-
 }
