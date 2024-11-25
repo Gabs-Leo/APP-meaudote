@@ -1,0 +1,15 @@
+@media screen and (max-width: 1000px) {
+    .pet-modal-card{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .pet-card-modal-image{
+        margin-bottom: 18px;
+        height: 200px !important;
+    }
+
+    .custom-modal{
+        width: 100% !important;
+    }
+}

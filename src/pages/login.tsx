@@ -1,10 +1,11 @@
+import "./login.css"
+import { api } from "../utils/api";
 import { FormEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../components/button/Button";
 import { Footer } from "../components/footer/Footer";
 import { Header } from "../components/header/Header";
 import { Navbar } from "../components/navbar/Navbar";
-import { api } from "../utils/api";
-import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
   return (
@@ -20,10 +21,10 @@ export const Login = () => {
 };
 
 const LoginForm = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
   const [loginError, setLoginError] = useState<string>("");
-  const navigate = useNavigate();
 
   const handleLogin = async (event: FormEvent) => {
     event.preventDefault();
@@ -44,8 +45,8 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="container d-flex justify-content-between my-5">
-      <div style={{ width: `48%` }}>
+    <div className="container d-flex justify-content-between my-5 login-forms">
+      <div id="login-form" style={{ width: `48%` }}>
         <div
           className="w-100 p-3"
           style={{ border: `2px solid var(--baseGray)`, borderRadius: `6px` }}
@@ -88,7 +89,7 @@ const LoginForm = () => {
           </form>
         </div>
       </div>
-      <div style={{ width: `48%` }}>
+      <div id="register-form" style={{ width: `48%` }}>
         <div
           className="w-100 p-3"
           style={{ border: `2px solid var(--baseGray)`, borderRadius: `6px` }}
@@ -97,9 +98,9 @@ const LoginForm = () => {
             CRIAR CONTA
           </h2>
           <p>
-            "Ainda não tem uma conta?
+            Ainda não tem uma conta?
             Cadastre-se agora e comece a fazer a diferença!
-            Juntos, podemos transformar a vida de centenas de animais. Crie sua conta agora mesmo e faça parte dessa missão!"
+            Juntos, podemos transformar a vida de centenas de animais. Crie sua conta agora mesmo e faça parte dessa missão!
           </p>
           <div className="d-flex justify-content-end">
             <Button text="REGISTRAR" link="/register" />

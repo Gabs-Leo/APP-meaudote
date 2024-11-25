@@ -1,0 +1,12 @@
+@media screen and (max-width: 1000px) {
+    .login-forms{
+        flex-direction: column;
+        width: 100%;
+    }
+    #login-form {
+        margin-bottom: 10px;
+    }
+    #login-form, #register-form {
+        width: 100% !important;
+    }
+}

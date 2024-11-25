@@ -1,4 +1,5 @@
 import { Box, Modal, Typography } from "@mui/material"
+import "./modal.css"
 
 interface ModalProps {
   onClose?:() => void;
@@ -24,18 +25,21 @@ export const CustomModal = (props:ModalProps) => {
   };
 
   return <Modal
+    className="custom-modal"
     open={props.open}
     onClose={props.onClose}
     aria-labelledby="modal-modal-title"
-    aria-describedby="modal-modal-description"
+    aria-describedby="modal-description"
   >
   <Box sx={style}>
+    <div id="modal">
     {props.title != "" ? <Typography id="modal-modal-title" variant="h6" component="h2">
       {props.title}
     </Typography> : <></>}
-    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+    <Typography id="modal-description" sx={{ mt: 2 }}>
       {props.children}
     </Typography>
-  </Box>
+    </div>
+  </ Box>
   </Modal>
 }

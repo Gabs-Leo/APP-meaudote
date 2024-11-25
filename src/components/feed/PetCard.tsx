@@ -1,3 +1,4 @@
+import "./petcard.css"
 import { useCallback, useEffect, useState } from "react";
 import { Button } from "../button/Button";
 import { CustomModal } from "../modal/Modal";
@@ -66,8 +67,8 @@ export const PetCard = (props: PetCardProps) => {
         open={isModalOpen}
         onClose={() => setModalOpen(false)}
       >
-        <div className="d-flex justify-content-center">
-          <div
+        <div className="d-flex justify-content-center pet-modal-card">
+          <div className="pet-card-modal-image"
             style={{
               width: `50%`,
               height: `500px`,

@@ -9,3 +9,10 @@
 #about-us img{ 
   width: 200px;
 }
+
+@media screen and (max-width: 1000px) {
+  #about-us{
+    width: 100%;
+    padding: 40px;
+  }
+}
