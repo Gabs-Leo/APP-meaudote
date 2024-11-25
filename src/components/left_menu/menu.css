@@ -3,6 +3,7 @@
   align-items: center;
   flex-direction: column;
   
+  
   width: 13%;
   padding: 10px;
 
@@ -10,4 +11,26 @@
 
 .left-menu img {
   width: 50%;
+}
+
+@media screen and (max-width: 1000px) {
+  #filler-div{
+    display: none;
+  }
+  #left-menu{
+    height: 100vh !important;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    background-color: white;
+    transition: .4s;
+    overflow-x: hidden;
+  }
+  #mobile-menu{
+    display: block;
+    position: fixed;
+    right: 0;
+    top: 0;
+  }
+
 }

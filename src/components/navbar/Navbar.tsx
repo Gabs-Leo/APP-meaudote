@@ -6,7 +6,6 @@ import { useState } from "react";
 import Hamburger from "hamburger-react";
 
 export const Navbar = () => {
-
   const [isOpen, setOpen] = useState(false);
   const [menuWidth, setMenuWidth] = useState("0%");
   const handleOpen = () => {

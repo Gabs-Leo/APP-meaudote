@@ -10,6 +10,7 @@ import { CustomModal } from "../components/modal/Modal";
 import { Dropzone } from "../components/dropzone/Dropzone";
 import { Species } from "../enums/Species";
 import { PetTable } from "../components/pet_table/PetTable";
+import "./profile.css"
 
 const getHeaders = async () => {
   return {
@@ -150,10 +151,10 @@ export const Profile = () => {
 
   return (
     <>
-      <div>
+      <div >
         <div className="container d-flex">
           <LeftMenu />
-          <div style={{ width: `80%` }}>
+          <div id="profile-container" style={{ width: `80%` }}>
             <div
               className="w-100"
               style={{
