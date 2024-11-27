@@ -5,10 +5,9 @@ header{
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    background-color: #191a1c !important;
-    background-image: url("../../images/cat_bg.png") !important;
-    background-attachment: fixed;
+    background-color: #000000 !important;
     
+    background-attachment: fixed;
     text-align: center;
 
     display: flex;

@@ -11,6 +11,7 @@ import { Dropzone } from "../components/dropzone/Dropzone";
 import { Species } from "../enums/Species";
 import { PetTable } from "../components/pet_table/PetTable";
 import "./profile.css"
+import { Loading } from "../components/loading/Loading";
 
 const getHeaders = async () => {
   return {
@@ -146,7 +147,7 @@ export const Profile = () => {
   }
   
   if (appUser == null) {
-    return <>loading</>;
+    return <Loading />
   }
 
   return (

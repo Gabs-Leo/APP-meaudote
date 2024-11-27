@@ -6,6 +6,7 @@ import { AppUserProvider } from "./providers/AppUserProvider";
 import { Profile } from "./pages/profile";
 import { Login } from "./pages/login";
 import { Register } from "./pages/register";
+import { Pet } from "./pages/pet";
 
 export const App = () => {
   return (<>
@@ -15,6 +16,7 @@ export const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/pets" element={<Pets />} />
+          <Route path="/pets/:petId" element={<Pet />} />
           
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

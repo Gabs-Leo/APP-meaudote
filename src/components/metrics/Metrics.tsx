@@ -28,7 +28,7 @@ export const Metrics = () => {
             <p>Parcerias com ONGs e empresas locais</p>
           </div>
         </div>
-        <Button text="QUERO AJUDAR" link="#nav" />
+        <Button text="QUERO AJUDAR" link="/login" />
       </div>
     </div>
   )

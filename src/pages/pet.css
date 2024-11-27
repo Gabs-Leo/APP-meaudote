@@ -1,0 +1,14 @@
+@media screen and (max-width: 1000px) {
+    #pet-page-image{
+        width: 100% !important;
+        height: auto !important;
+    }
+    #pet-page{
+        display: flex;
+        flex-direction: column;
+    }
+    #pet-page-text{
+        width: 100% !important;
+        padding: 20px !important;
+    }
+}
