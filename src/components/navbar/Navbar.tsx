@@ -28,24 +28,15 @@ export const Navbar = () => {
           <Button link="/pets" text="ADOTAR" />
         </div>
         <div className="pc-menu">
-          <Link className="menu-option" to={"/contact"}>CONTATO</Link>
-        </div>
-        <div className="pc-menu">
-          <Link className="menu-option" to={"/about"}>SOBRE</Link>
-        </div>
-        <div className="pc-menu">
           <Link className="menu-option" style={{ color: `var(--baseColor)`, fontWeight: `bold` }} to={"/login"}>
             LOGIN
           </Link>
         </div>
         <div className="mobile-menu" style={{position: "relative"}}>
-          <Hamburger color="var(--baseColor)" toggled={isOpen} toggle={handleOpen} />
+          <Hamburger color={"var(--baseColor)"} toggled={isOpen} toggle={handleOpen} />
         </div>
-
         <div className="mobile-menu menu-screen" style={{width: menuWidth}} onClick={() => handleOpen()}>
             <Link className="menu-option" to={"/"}>INICIO</Link>
-            <Link className="menu-option" to={"/contact"}>CONTATO</Link>
-            <Link className="menu-option" to={"/about"}>SOBRE</Link>
             <Link className="menu-option" style={{ color: `var(--baseColor)`, fontWeight: `bold` }} to={"/login"}>
               LOGIN
             </Link>

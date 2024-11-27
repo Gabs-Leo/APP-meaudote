@@ -10,6 +10,7 @@ import logo from "./../../images/logo_color.png";
 import { getEnumNames } from "../../utils/Utils";
 import Hamburger from "hamburger-react";
 import { Button } from "../button/Button";
+import { Loading } from "../loading/Loading";
 
 interface CloseButton {
   text:string
@@ -143,7 +144,7 @@ export const Filter = () => {
   }, []);
 
   if (states == null || cities == null) {
-    return <>loading</>;
+    return <Loading />;
   }
 
   return (

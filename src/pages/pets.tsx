@@ -12,6 +12,7 @@ import defaultDogImage from "./../images/default-dog.png";
 import { capitalize, getEnumNames } from "../utils/Utils";
 import { Navigate } from "react-router-dom";
 import { LeftMenu } from "../components/left_menu/Menu";
+import { Loading } from "../components/loading/Loading";
 
 export interface PetFilter {
   species: Species[];
@@ -93,7 +94,7 @@ export const Pets = () => {
   }, [filterOptions]);
 
   if (states == null || cities == null) {
-    return <>loading</>;
+    return <Loading />
   }
 
   if (!localStorage.getItem("token")){
